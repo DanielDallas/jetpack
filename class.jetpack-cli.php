@@ -49,6 +49,7 @@ class Jetpack_CLI extends WP_CLI_Command {
 		$cxntests = new Jetpack_Cxn_Tests();
 
 		if ( $cxntests->pass() ) {
+			WP_CLI::line( __( 'TEST RESULTS:' ) );
 			foreach ( $cxntests->raw_results() as $test ) {
 				if ( true === $test['pass'] ) {
 					WP_CLI::log( WP_CLI::colorize( "%gPassed:%n " . $test['name'] ) );
@@ -63,6 +64,14 @@ class Jetpack_CLI extends WP_CLI_Command {
 				$error[] = $fail['name'] . ': ' . $fail['message'];
 			}
 			WP_CLI::error_multi_line( $error );
+			WP_CLI::line( __( 'TEST RESULTS:' ) );
+			foreach ( $cxntests->raw_results() as $test ) {
+				if ( true === $test['pass'] ) {
+					WP_CLI::log( WP_CLI::colorize( "%gPassed:%n " . $test['name'] ) );
+				} else if ( 'skipped' === $test['pass'] ) {
+					WP_CLI::log( WP_CLI::colorize( "%ySkipped:%n " . $test['name'] ) );
+				}
+			}
 			WP_CLI::error( __('Jetpack connection is broken.', 'jetpack' ) ); // Exit CLI.
 		}
 
