@@ -70,6 +70,8 @@ class Jetpack_CLI extends WP_CLI_Command {
 					WP_CLI::log( WP_CLI::colorize( "%gPassed:%n " . $test['name'] ) );
 				} else if ( 'skipped' === $test['pass'] ) {
 					WP_CLI::log( WP_CLI::colorize( "%ySkipped:%n " . $test['name'] ) );
+				} else { // Failed
+					WP_CLI::log( WP_CLI::colorize( "%rFailed:%n " . $test['name'] ) );
 				}
 			}
 			WP_CLI::error( __('Jetpack connection is broken.', 'jetpack' ) ); // Exit CLI.
