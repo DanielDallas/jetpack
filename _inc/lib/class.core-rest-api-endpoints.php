@@ -945,6 +945,8 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @return array|mixed|object|WP_Error
 	 */
 	public static function jetpack_connection_test_for_external() {
+		// Since we are running this test for inclusion in the WP.com testing suite, let's not try to run them as part of these results.
+		add_filter( 'jetpack_debugger_run_self_test', '__return_false' );
 		jetpack_require_lib( 'debugger' );
 		$cxntests = new Jetpack_Cxn_Tests();
 
