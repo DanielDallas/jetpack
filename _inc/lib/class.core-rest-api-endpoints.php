@@ -116,6 +116,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 		register_rest_route( 'jetpack/v4', '/connection/test-wpcom/', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => __CLASS__ . '::jetpack_connection_test_for_external',
+			'permission_callback' => __CLASS__ . '::view_jetpack_connection_test_check',
 		) );
 
 		register_rest_route( 'jetpack/v4', '/rewind', array(
@@ -935,6 +936,43 @@ class Jetpack_Core_Json_Api_Endpoints {
 		} else {
 			return $cxntests->output_fails_as_wp_error();
 		}
+	}
+
+	/**
+	 * Test connection permission check method.
+	 *
+	 * @since 6.8.0
+	 *
+	 * @return bool
+	 */
+	public static function view_jetpack_connection_test_check() {
+		$signature = base64_decode( $_GET['signature'] );
+
+		$signature_data = wp_json_encode(
+			array(
+				'rest_route' => $_GET['rest_route'],
+				'timestamp' => intval( $_GET['timestamp'] ),
+				'url' => $_GET['url'],
+			)
+		);
+
+		if (
+			! function_exists( 'openssl_verify' )
+			|| ! openssl_verify(
+				$signature_data,
+				$signature,
+				JETPACK__DEBUGGER_PUBLIC_KEY
+			)
+		) {
+			return false;
+		}
+
+		// signature timestamp must be within 5min of current time
+		if ( abs( time() - intval( $_GET['timestamp'] ) ) > 300 ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
