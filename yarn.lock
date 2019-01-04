@@ -6174,9 +6174,9 @@ p-try@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
 
-page@1.7.1:
-  version "1.7.1"
-  resolved "http://registry.npmjs.org/page/-/page-1.7.1.tgz#3886c147b895487783759b37e800a11213bc38ed"
+page@1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/page/-/page-1.11.3.tgz#4083dfae31e077be4d96489e3e75a2afe2b84b8d"
   dependencies:
     path-to-regexp "~1.2.1"
 
