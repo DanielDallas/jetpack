@@ -515,6 +515,7 @@ class Jetpack_Gutenberg {
 			array(
 				'available_blocks' => self::get_block_availability(),
 				'jetpack' => array( 'is_active' => Jetpack::is_active() ),
+				'blog_id' => ( defined( 'IS_WPCOM' ) && IS_WPCOM ) ? get_current_blog_id() : Jetpack_Options::get_option( 'id' )
 			)
 		);
 
