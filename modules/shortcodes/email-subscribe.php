@@ -52,7 +52,7 @@ class Jetpack_Email_Subscribe {
 	private function register_init_hook() {
 		add_action( 'init', array( $this, 'init_hook_action' ) );
 		add_action( 'jetpack_options_whitelist', array( $this, 'filter_whitelisted_options' ), 10, 1 );
-		add_action( 'jetpack_blocks_to_register', array( $this, 'prevent_jetpack_register_block' ), 10, 1 );
+		// add_action( 'jetpack_blocks_to_register', array( $this, 'prevent_jetpack_register_block' ), 10, 1 );
 	}
 
 	/**
