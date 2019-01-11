@@ -82,38 +82,45 @@ class Jetpack_Email_Subscribe {
 		add_shortcode( self::$shortcode, array( $this, 'parse_shortcode' ) );
 	}
 
+	/**
+	 * Register our Mailchimp subscription block for the block editor.
+	 *
+	 * @since 6.9.0
+	 */
 	private function register_gutenberg_block() {
 		if ( Jetpack_Gutenberg::is_gutenberg_available() ) {
-			register_block_type( 'jetpack/' . self::$block_name, array(
-				'attributes' => array(
-					'title' => array(
-						'type' => 'string',
+			register_block_type(
+				'jetpack/' . self::$block_name,
+				array(
+					'attributes' => array(
+						'title' => array(
+							'type' => 'string',
+						),
+						'email_placeholder' => array(
+							'type' => 'string',
+						),
+						'submit_label' => array(
+							'type' => 'string',
+						),
+						'consent_text' => array(
+							'type' => 'string',
+						),
+						'processing_label' => array(
+							'type' => 'string',
+						),
+						'success_label' => array(
+							'type' => 'string',
+						),
+						'error_label' => array(
+							'type' => 'string',
+						),
+						'className' => array(
+							'type' => 'string',
+						),
 					),
-					'email_placeholder' => array(
-						'type' => 'string',
-					),
-					'submit_label' => array(
-						'type' => 'string',
-					),
-					'consent_text' => array(
-						'type' => 'string',
-					),
-					'processing_label' => array(
-						'type' => 'string',
-					),
-					'success_label' => array(
-						'type' => 'string',
-					),
-					'error_label' => array(
-						'type' => 'string',
-					),
-					'className' => array(
-						'type' => 'string',
-					),
-				),
-				'style' => 'jetpack-email-subscribe',
-				'render_callback' => array( $this, 'parse_shortcode' ),
-			) );
+					'render_callback' => array( $this, 'parse_shortcode' ),
+				)
+			);
 			jetpack_register_block( self::$block_name, array(), array( 'available' => true ) );
 		}
 	}
@@ -197,7 +204,7 @@ class Jetpack_Email_Subscribe {
 			wp_enqueue_script( 'jetpack-email-subscribe' );
 		}
 
-		if ( ! wp_style_is( 'jetpack-email-subscribe', 'enqueue' ) ) {
+		if ( ! wp_style_is( 'jetpack-email-subscribe', 'enqueued' ) ) {
 			wp_enqueue_style( 'jetpack-email-subscribe' );
 		}
 
